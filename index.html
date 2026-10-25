@@ -546,18 +546,18 @@ html.intro-open{overflow:hidden}
       <span class="num" id="num">+91 73398 65619</span>
       <button class="copy" id="copy" type="button">Copy number</button>
       <a class="copy wa" id="wa" href="https://wa.me/917339865619?text=Hi!%20I%27d%20like%20to%20know%20more%20about%20your%20caf%C3%A9%20packages." target="_blank" rel="noopener">Chat on WhatsApp</a>
-      <span id="insta"></span>
+      <a id="insta" class="copy" href="https://www.instagram.com/attentiontheory/" target="_blank" rel="noopener"></a>
     </div>
   </div>
 </section>
 
 <footer class="foot">
-  <div class="wrap"><span class="logo"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="32" cy="32" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><circle cx="32" cy="32" r="4.6" fill="var(--pink)"/><path d="M32 6v9M32 49v9M6 32h9M49 32h9" stroke="currentColor" stroke-width="1.6"/></svg><span>Attention <i>Theory</i></span></span><span>Content for cafés. Made with too much coffee.</span></div>
+  <div class="wrap"><span class="logo"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="32" cy="32" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><circle cx="32" cy="32" r="4.6" fill="var(--pink)"/><path d="M32 6v9M32 49v9M6 32h9M49 32h9" stroke="currentColor" stroke-width="1.6"/></svg><span>Attention <i>Theory</i></span></span><span>Content for cafés. Made with too much coffee. <a href="https://www.instagram.com/attentiontheory/" target="_blank" rel="noopener" style="color:var(--strawberry)">@attentiontheory</a></span></div>
 </footer>
 
 <script>
 /* ===== Edit your details here ===== */
-const STUDIO = { name: "Attention Theory", phone: "+91 73398 65619", whatsapp: "917339865619", insta: "" };
+const STUDIO = { name: "Attention Theory", phone: "+91 73398 65619", whatsapp: "917339865619", insta: "@attentiontheory" };
 document.getElementById('num').textContent = STUDIO.phone;
 document.getElementById('insta').textContent = STUDIO.insta;
 document.getElementById('insta').hidden = !STUDIO.insta;

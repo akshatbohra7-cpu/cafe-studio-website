@@ -93,7 +93,8 @@ html.intro-open{overflow:hidden}
 .hero .eyebrow{color:var(--crema);display:flex;align-items:center;gap:10px}
 .hero .eyebrow::before{content:"";width:28px;height:2px;background:currentColor}
 .hero h1{font-size:clamp(2.4rem, 6vw, 5.6rem);margin-top:22px}
-.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.26em;margin-bottom:-.26em}
+.hero h1 .line:last-child{margin-bottom:0}
 .hero h1 .line>span{display:inline-block;animation:rise 1s cubic-bezier(.2,.85,.2,1) both;animation-delay:calc(var(--i) * 110ms + 150ms)}
 .hero h1 .script{color:var(--strawberry)}
 @keyframes rise{from{transform:translateY(105%)}to{transform:none}}
@@ -185,6 +186,12 @@ html.intro-open{overflow:hidden}
 .bar i{display:block;height:100%;background:var(--milk);animation:prog var(--len,9s) linear infinite}
 @keyframes prog{from{width:0}to{width:100%}}
 .work-note{margin-top:30px;font-family:var(--mono);font-size:.85rem;color:var(--ink-soft)}
+.work-eyebrow{color:var(--cherry);margin-bottom:14px}
+.tile.photo,.tile.vid{background:#e9dfd3;margin:0;box-shadow:0 14px 28px -18px rgba(30,18,12,.55)}
+.tile.photo img,.tile.vid video{width:100%;height:100%;object-fit:cover;display:block}
+.tile.vid{width:170px}
+.reel-badge{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(30,18,12,.72);color:var(--milk);font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:999px}
+.play-sm{width:0;height:0;border-left:7px solid var(--milk);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
 
 /* ---------- MENU ---------- */
 .menu{background:var(--matcha);color:var(--espresso);padding-block:70px 140px}
@@ -329,7 +336,7 @@ html.intro-open{overflow:hidden}
   .side{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr}
   .tile{width:200px;height:250px}
-  .tile.reel{width:141px}
+  .tile.reel,.tile.vid{width:141px}
   .big{font-size:1.35rem}
   .tile.cup svg{width:120px;height:120px}
   .item-row{flex-wrap:wrap}
@@ -445,14 +452,17 @@ html.intro-open{overflow:hidden}
 <section class="work pour" data-drink="Flat white" data-color="#F7F1E9">
   <svg class="edge" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V30C180 0 300 6 460 30S760 66 940 36 1240 2 1440 26V70Z"/></svg>
   <div class="wrap work-head">
-    <h2>Your grid, but <span class="script">hungry.</span></h2>
-    <p>Fresh concepts from the studio. Posts and reels made to stop a thumb mid-scroll.</p>
+    <div>
+      <p class="eyebrow work-eyebrow">Inspiration board</p>
+      <h2>The <span class="script">vibe</span> we bring to your feed.</h2>
+    </div>
+    <p>The light, the colours and the energy we design for. Your posts get made fresh, for your café and your menu.</p>
   </div>
-  <div class="marquee" aria-label="Sample post and reel concepts">
-    <div class="track" id="row1" style="--dur:70s"></div>
-    <div class="track rev" id="row2" style="--dur:80s"></div>
+  <div class="marquee" aria-label="Inspiration board of café posts and reels">
+    <div class="track" id="row1" style="--dur:75s"></div>
+    <div class="track rev" id="row2" style="--dur:85s"></div>
   </div>
-  <p class="wrap work-note">Every tile above is a concept. Yours gets made in your café's colours, with your menu.</p>
+  <p class="wrap work-note">A moodboard of styles we love. Everything we make for you is original to your café.</p>
 </section>
 
 <!-- MENU -->
@@ -704,41 +714,51 @@ const fmt = n => '₹' + n.toLocaleString('en-IN');
   addEventListener('scroll', update, {passive:true}); addEventListener('resize', update); update();
 })();
 
-/* ---------- Work marquee ---------- */
+/* ---------- Inspiration board marquee ---------- */
 (function work(){
-  const E='#1E120C', M='#F7F1E9', S='#F5C3CC', G='#B4C76C', C='#E8A04A', R='#C8202F', K='#C98A4B';
-  const cupSVG = (milk, liquid) => `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="${M}" opacity=".95"/><circle cx="50" cy="50" r="38" fill="${liquid}"/><path d="M50 72 C 26 56, 30 34, 42 34 C 47 34, 50 38, 50 42 C 50 38, 53 34, 58 34 C 70 34, 74 56, 50 72 Z" fill="${milk}"/><path d="M50 26 L50 74" stroke="${liquid}" stroke-width="1.6"/></svg>`;
-  const tiles1 = [
+  const E='#1E120C', M='#F7F1E9', S='#F5C3CC', R='#C8202F', C='#E8A04A';
+  const P = (src, alt) => ({t:'photo', src:'assets/'+src+'.webp', alt});
+  const V = (src, alt) => ({t:'video', src:'assets/'+src, alt});
+  const row1 = [
+    P('handoff','Iced coffee handed across a green café counter'),
+    V('reel-food','Reel: dishes on a sunny café table'),
+    P('frosted','Frosted brew post design'),
+    P('latteart','Latte art being poured'),
     {t:'post', bg:R, fg:M, k:'Monday menu', x:'Monday is a *cortado* kind of day.'},
-    {t:'reel', bg:E, x:'The 3 second pour that stops the scroll', len:'7s', time:'0:12'},
-    {t:'post', bg:S, fg:E, k:'New in', x:'Strawberry cold foam. Pink on *purpose.*'},
-    {t:'cup', bg:K, fg:E, k:'Latte art Friday', liquid:'#7A4321'},
-    {t:'post', bg:G, fg:E, k:'Rainy day', x:'Rain outside. Filter coffee *inside.*'},
-    {t:'reel', bg:R, x:'POV: your first sip after a long week', len:'9s', time:'0:09'},
-    {t:'post', bg:E, fg:S, k:'Weekend', x:'Brunch is a love *language.*'},
+    P('together','Two iced coffees by a window, "Coffee brings people together"'),
+    P('pom','A fluffy dog in a café'),
+    P('machine','Espresso pouring from a machine with chat bubbles'),
+    P('matcha','Matcha latte post design'),
+    P('burger','A loaded burger in paper'),
+    P('pour','Close-up of an espresso shot pouring'),
   ];
-  const tiles2 = [
-    {t:'post', bg:C, fg:E, k:'Regulars', x:'"The usual?" We already *know.*'},
-    {t:'reel', bg:G, x:'100 cold brews before 9am', len:'11s', time:'0:15'},
-    {t:'post', bg:M, fg:E, k:'Behind the counter', x:'Our croissant has 27 layers. Come *count.*', border:true},
+  const row2 = [
+    P('breakfast','All-day breakfast pancakes post'),
+    V('reel-interior','Reel: walking through a café interior'),
+    P('cup','A cup of coffee in warm sunlight'),
+    P('eggcheese','Egg and cheese sandwich post design'),
     {t:'post', bg:S, fg:R, k:'Tonight', x:'Open mic. Hot chocolate. Bring *someone.*'},
-    {t:'cup', bg:E, fg:M, k:'Slow mornings', liquid:'#8A4E2A'},
-    {t:'reel', bg:C, x:'How we make the city\'s pinkest latte', len:'8s', time:'0:11'},
-    {t:'post', bg:R, fg:S, k:'Exam season', x:'Study here. Refills are on us after *4.*'},
+    P('daily','Daily brew post design'),
+    P('friends','Two friends having coffee on café steps'),
+    V('reel-talk','Reel: two friends talking over coffee'),
+    P('pets','Pet-friendly café post'),
+    P('icedlatte','Iced latte post design'),
+    P('table','A café table in afternoon light'),
   ];
   const em = t => t.replace(/\*(.+?)\*/g,'<em>$1</em>');
   const html = d => {
+    if (d.t==='photo') return `<figure class="tile photo"><img src="${d.src}" alt="${d.alt}" loading="lazy" decoding="async" width="240" height="300"></figure>`;
+    if (d.t==='video') return `<figure class="tile reel vid"><video src="${d.src}.mp4" poster="${d.src}.jpg" muted autoplay loop playsinline preload="metadata" aria-label="${d.alt}"></video><span class="reel-badge"><span class="play-sm"></span>Reel</span></figure>`;
     const top = `<div class="tile-top"><span class="av"></span><span>your.cafe</span><span class="dots">•••</span></div>`;
-    if (d.t==='reel') return `<article class="tile reel" style="--tb:${d.bg};--tf:#F7F1E9;--len:${d.len}"><span class="reel-fill"></span>${top}<div class="tile-body"><span class="play"></span><p class="big" style="margin-top:auto">${d.x}</p></div><div class="bar"><i></i></div><div class="tile-foot"><span>Reel</span><span>${d.time}</span></div></article>`;
-    if (d.t==='cup') return `<article class="tile cup" style="--tb:${d.bg};--tf:${d.fg}">${top}<div class="tile-body">${cupSVG('#FBF4EA', d.liquid)}<span class="kick">${d.k}</span></div><div class="tile-foot"><span>Concept</span><span class="icons">♡ ↗</span></div></article>`;
-    return `<article class="tile" style="--tb:${d.bg};--tf:${d.fg};${d.border?'box-shadow:inset 0 0 0 2px #1E120C;':''}">${top}<div class="tile-body"><span class="kick">${d.k}</span><p class="big">${em(d.x)}</p></div><div class="tile-foot"><span>Concept</span><span class="icons">♡ ↗</span></div></article>`;
+    return `<article class="tile" style="--tb:${d.bg};--tf:${d.fg}">${top}<div class="tile-body"><span class="kick">${d.k}</span><p class="big">${em(d.x)}</p></div><div class="tile-foot"><span>Concept</span><span class="icons">♡ ↗</span></div></article>`;
   };
   const fill = (id, list) => {
     const one = list.map(html).join('');
-    const el = document.getElementById(id);
-    el.innerHTML = one + `<div style="display:contents" aria-hidden="true">${one}</div>`;
+    document.getElementById(id).innerHTML = one + `<div style="display:contents" aria-hidden="true">${one}</div>`;
   };
-  fill('row1', tiles1); fill('row2', tiles2);
+  fill('row1', row1); fill('row2', row2);
+  // some browsers need a nudge to start muted inline video
+  document.querySelectorAll('.tile video').forEach(v => { v.muted = true; const p = v.play(); if (p) p.catch(()=>{}); });
 })();
 
 /* ---------- Menu: receipt + cappuccino maths ---------- */

@@ -922,20 +922,38 @@ const fmt = n => '₹' + n.toLocaleString('en-IN');
     lbl.textContent = playing ? 'Sound on' : 'Café sounds';
     heroBtn.textContent = playing ? '♪ Café sounds on. Tap to mute' : '♪ Turn on café sounds';
   }
+  function start(){
+    if (!ac) init();
+    ac.resume(); nextTime = ac.currentTime + .1; nextClink = ac.currentTime + 1.5; nextSteam = ac.currentTime + 8;
+    master.gain.cancelScheduledValues(ac.currentTime); master.gain.setTargetAtTime(.75, ac.currentTime, .6);
+    clearInterval(timer); timer = setInterval(schedule, 25); playing = true; setUI();
+  }
+  function stop(){
+    master.gain.cancelScheduledValues(ac.currentTime); master.gain.setTargetAtTime(0, ac.currentTime, .25);
+    clearInterval(timer); playing = false; setUI();
+    setTimeout(()=>{ if (!playing) ac.suspend(); }, 1200);
+  }
+  let muted = false; try { muted = localStorage.getItem('cafeSoundsMuted') === '1'; } catch(e){}
+  const remember = v => { try { localStorage.setItem('cafeSoundsMuted', v ? '1' : '0'); } catch(e){} };
+  let unlockedAt = 0;
   function toggle(){
+    if (Date.now() - unlockedAt < 400) return; // this tap already started the sound
+    try { playing ? stop() : start(); remember(!playing); }
+    catch(e){ lbl.textContent = 'Sound not supported'; }
+  }
+  // Browsers only allow sound after the visitor's first tap, click or key press.
+  // Try right away, and otherwise start on the first interaction anywhere on the page.
+  const GESTURES = ['pointerdown','keydown','touchend'];
+  function unlock(){
+    GESTURES.forEach(ev=>document.removeEventListener(ev, unlock, true));
+    if (playing && ac.state === 'running') return;
+    try { start(); unlockedAt = Date.now(); } catch(e){}
+  }
+  if (!muted){
     try {
-      if (!ac) init();
-      if (!playing){
-        ac.resume(); nextTime = ac.currentTime + .1; nextClink = ac.currentTime + 1.5; nextSteam = ac.currentTime + 8;
-        master.gain.cancelScheduledValues(ac.currentTime); master.gain.setTargetAtTime(.75, ac.currentTime, .6);
-        timer = setInterval(schedule, 25); playing = true;
-      } else {
-        master.gain.cancelScheduledValues(ac.currentTime); master.gain.setTargetAtTime(0, ac.currentTime, .25);
-        clearInterval(timer); playing = false;
-        setTimeout(()=>{ if (!playing) ac.suspend(); }, 1200);
-      }
-    } catch(e){ lbl.textContent = 'Sound not supported'; }
-    setUI();
+      start();
+      setTimeout(()=>{ if (ac.state !== 'running'){ lbl.textContent = 'Tap for sound'; heroBtn.textContent = '♪ Tap anywhere for café sounds'; GESTURES.forEach(ev=>document.addEventListener(ev, unlock, true)); } }, 300);
+    } catch(e){}
   }
   btn.addEventListener('click', toggle); heroBtn.addEventListener('click', toggle);
   document.addEventListener('visibilitychange', ()=>{ if (ac && playing){ document.hidden ? ac.suspend() : ac.resume(); } });

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Foam is a content studio for cafés. Scroll-stopping posts and reels from ₹5,000.">
-<meta property="og:title" content="Foam Studio — content for cafés">
+<meta name="description" content="Attention Theory is a content studio for cafés. Scroll-stopping posts and reels from ₹5,000.">
+<meta property="og:title" content="Attention Theory | Content studio for cafés">
 <meta property="og:description" content="People taste with their eyes first. Posts and reels that turn scrollers into regulars.">
-<meta name="theme-color" content="#1E120C">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231E120C'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%23C98A4B'/%3E%3Cpath d='M32 46C20 38 22 26 28 26c2 0 4 2 4 4 0-2 2-4 4-4 6 0 8 12-4 20z' fill='%23F7F1E9'/%3E%3C/svg%3E">
-<title>Foam Studio</title>
+<meta name="theme-color" content="#130B0F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23130B0F'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23F7F1E9' stroke-width='3'/%3E%3Cpath d='M32 6v10M32 48v10M6 32h10M48 32h10' stroke='%23F7F1E9' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23DB4A86'/%3E%3C/svg%3E">
+<title>Attention Theory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Instrument+Serif:ital@0;1&family=Courier+Prime:wght@400;700&display=swap">
@@ -20,6 +20,8 @@
   --espresso-2:#2B1A12;
   --crema:#C98A4B;
   --milk:#F7F1E9;
+  --pink:#DB4A86;
+  --night:#130B0F;
   --strawberry:#F5C3CC;
   --matcha:#B4C76C;
   --caramel:#E8A04A;
@@ -56,8 +58,34 @@ button{font:inherit;cursor:pointer}
 /* ---------- HERO ---------- */
 .hero{background:var(--espresso);position:relative;overflow:hidden}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px}
-.logo{font-family:var(--serif);font-style:italic;font-size:2.2rem;letter-spacing:-.01em;color:var(--milk);text-decoration:none;line-height:1}
-.logo b{color:var(--strawberry);font-weight:400}
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.85rem;letter-spacing:-.01em;color:var(--milk);text-decoration:none;line-height:1;white-space:nowrap}
+.logo i{color:var(--pink)}
+.logo .mark{width:34px;height:34px;flex:none;transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.logo:hover .mark{transform:rotate(90deg)}
+@media (max-width:420px){.logo{font-size:1.5rem}.logo .mark{width:28px;height:28px}}
+
+/* Intro: the tap that lets the café music play */
+.intro{position:fixed;inset:0;z-index:100;background:var(--night);color:var(--milk);display:grid;place-items:center;padding:24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px));cursor:pointer;clip-path:circle(150% at 50% 42%);transition:clip-path 1s cubic-bezier(.7,0,.2,1)}
+.intro.out{clip-path:circle(0% at 50% 42%);pointer-events:none}
+.intro-in{display:grid;justify-items:center;text-align:center;gap:14px}
+.intro-mark{width:clamp(110px,22vw,150px);height:auto;color:var(--milk)}
+.intro-mark .ring{stroke-dasharray:140;stroke-dashoffset:140;animation:draw 1.4s .2s cubic-bezier(.6,0,.2,1) forwards}
+.intro-mark .ring2{stroke-dasharray:70;stroke-dashoffset:70;animation:draw 1.2s .5s cubic-bezier(.6,0,.2,1) forwards}
+.intro-mark .tick{opacity:0;animation:fade .5s 1.1s forwards}
+.intro-mark .dot{transform-origin:32px 32px;transform:scale(0);animation:dotin .5s 1.3s cubic-bezier(.3,1.8,.5,1) forwards, pulse 2s 2s ease-in-out infinite}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes dotin{to{transform:scale(1)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+.intro-name{font-family:var(--serif);font-size:clamp(3rem,9vw,5.6rem);line-height:1;letter-spacing:-.01em;margin-top:10px;animation:fade 1s 1.2s both}
+.intro-name i{color:var(--pink)}
+.intro-rule{width:48px;height:1px;background:#6b5a62;animation:fade 1s 1.4s both}
+.intro-line{font-family:var(--mono);font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:#bfaab4;animation:fade 1s 1.5s both}
+.intro-go{margin-top:22px;background:var(--pink);color:var(--milk);border:0;border-radius:999px;padding:16px 28px;font-weight:800;font-size:1.05rem;animation:fade 1s 1.7s both;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.intro-go:hover{transform:scale(1.05) rotate(-1.5deg)}
+.intro-quiet{background:none;border:0;color:#a8939d;font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;text-decoration:underline;text-underline-offset:4px;animation:fade 1s 1.9s both}
+.intro-quiet:hover{color:var(--milk)}
+html.intro-open{overflow:hidden}
+.intro-open .hero h1 .line>span,.intro-open .hero-sub,.intro-open .hero-actions{animation-play-state:paused}
 .nav-cta{font-family:var(--mono);font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--espresso);background:var(--milk);padding:10px 16px;border-radius:999px;text-decoration:none;transition:transform .2s, background .2s}
 .nav-cta:hover{background:var(--strawberry);transform:rotate(-3deg)}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:24px;padding-block:24px 120px}
@@ -205,7 +233,8 @@ button{font:inherit;cursor:pointer}
 .receipt.printing{animation:print 1.3s steps(14) both}
 @keyframes print{from{transform:translateY(-100%)}to{transform:none}}
 .r-c{text-align:center}
-.r-brand{font-family:var(--serif);font-style:italic;font-size:1.9rem;line-height:1}
+.r-brand{font-family:var(--serif);font-size:1.7rem;line-height:1}
+.r-brand i{color:#C2306E}
 .r-hr{border:0;border-top:1.5px dashed #a99a8f;margin:14px 0}
 .r-row{display:flex;justify-content:space-between;gap:10px}
 .r-total{font-weight:700;font-size:1.25rem}
@@ -258,7 +287,7 @@ button{font:inherit;cursor:pointer}
 #beans{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .foot{background:var(--espresso);color:#cdb8a6;padding-block:30px calc(30px + 54px);font-family:var(--mono);font-size:.85rem}
 .foot .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.foot .logo{font-size:1.5rem}
+.foot .logo{font-size:1.4rem}.foot .logo .mark{width:26px;height:26px}
 /* scroll reveal for big headlines (only those starting below the fold) */
 .reveal{clip-path:inset(0 0 100% 0);transform:translateY(.4em);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1), transform 1.1s cubic-bezier(.7,0,.2,1)}
 .reveal.in{clip-path:inset(-10% -5% -20% -5%);transform:none}
@@ -319,6 +348,17 @@ button{font:inherit;cursor:pointer}
 }
 </style>
 
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Welcome to Attention Theory">
+  <div class="intro-in">
+    <svg class="intro-mark" viewBox="0 0 64 64" aria-hidden="true"><circle class="ring" cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1"/><circle class="ring2" cx="32" cy="32" r="11" fill="none" stroke="currentColor" stroke-width=".8" opacity=".5"/><path class="tick" d="M32 6v9M32 49v9M6 32h9M49 32h9" stroke="currentColor" stroke-width="1"/><circle class="dot" cx="32" cy="32" r="4.6" fill="#DB4A86"/></svg>
+    <p class="intro-name">Attention <i>Theory</i></p>
+    <span class="intro-rule"></span>
+    <p class="intro-line">A content studio for cafés</p>
+    <button class="intro-go" id="enterSound" type="button">Step inside ♪</button>
+    <button class="intro-quiet" id="enterQuiet" type="button">Enter without sound</button>
+  </div>
+</div>
+<script>document.documentElement.classList.add('intro-open');</script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -329,7 +369,7 @@ button{font:inherit;cursor:pointer}
 <header class="hero" data-drink="Espresso" data-color="#C98A4B">
   <div class="wrap">
     <nav class="nav">
-      <a class="logo" href="#top" id="top">foam<b>.</b></a>
+      <a class="logo" href="#top" id="top" aria-label="Attention Theory"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="32" cy="32" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><circle cx="32" cy="32" r="4.6" fill="var(--pink)"/><path d="M32 6v9M32 49v9M6 32h9M49 32h9" stroke="currentColor" stroke-width="1.6"/></svg><span>Attention <i>Theory</i></span></a>
       <a class="nav-cta" href="#menu">See the menu</a>
     </nav>
     <div class="hero-grid">
@@ -383,8 +423,8 @@ button{font:inherit;cursor:pointer}
         </article>
         <article class="ticket" style="--r:1.5deg">
           <div class="t-top"><span>KOT #02</span><span>TBL 7</span></div>
-          <h3>Shot on a phone, under a tube light.</h3>
-          <p>The food deserved so much better.</p>
+          <h3>Same latte. Same angle. Every post.</h3>
+          <p>Your followers stopped noticing three posts ago.</p>
         </article>
         <article class="ticket" style="--r:-1deg">
           <div class="t-top"><span>KOT #03</span><span>TBL 2</span></div>
@@ -506,20 +546,21 @@ button{font:inherit;cursor:pointer}
       <span class="num" id="num">+91 73398 65619</span>
       <button class="copy" id="copy" type="button">Copy number</button>
       <a class="copy wa" id="wa" href="https://wa.me/917339865619?text=Hi!%20I%27d%20like%20to%20know%20more%20about%20your%20caf%C3%A9%20packages." target="_blank" rel="noopener">Chat on WhatsApp</a>
-      <span id="insta">@foam.studio</span>
+      <span id="insta"></span>
     </div>
   </div>
 </section>
 
 <footer class="foot">
-  <div class="wrap"><span class="logo">foam<b style="color:var(--strawberry);font-weight:400">.</b></span><span>Content for cafés. Made with too much coffee.</span></div>
+  <div class="wrap"><span class="logo"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="32" cy="32" r="11" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><circle cx="32" cy="32" r="4.6" fill="var(--pink)"/><path d="M32 6v9M32 49v9M6 32h9M49 32h9" stroke="currentColor" stroke-width="1.6"/></svg><span>Attention <i>Theory</i></span></span><span>Content for cafés. Made with too much coffee.</span></div>
 </footer>
 
 <script>
 /* ===== Edit your details here ===== */
-const STUDIO = { name: "Foam Studio", phone: "+91 73398 65619", whatsapp: "917339865619", insta: "@foam.studio" };
+const STUDIO = { name: "Attention Theory", phone: "+91 73398 65619", whatsapp: "917339865619", insta: "" };
 document.getElementById('num').textContent = STUDIO.phone;
 document.getElementById('insta').textContent = STUDIO.insta;
+document.getElementById('insta').hidden = !STUDIO.insta;
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fmt = n => '₹' + n.toLocaleString('en-IN');
@@ -639,6 +680,7 @@ const fmt = n => '₹' + n.toLocaleString('en-IN');
   resize();
   if (reduce){ for(let i=0;i<N;i++){X[i]=HX[i];Y[i]=HY[i];} mode='free'; }
   else startPour();
+  window.__repour = () => { if (!reduce) startPour(); };
   loop();
 })();
 
@@ -713,7 +755,7 @@ const fmt = n => '₹' + n.toLocaleString('en-IN');
   function printReceipt(key, animate){
     const p = PK[key];
     receipt.innerHTML = `
-      <div class="r-c"><div class="r-brand">foam.</div><div class="r-small">Content studio for cafés</div></div>
+      <div class="r-c"><div class="r-brand">Attention <i>Theory</i></div><div class="r-small">Content studio for cafés</div></div>
       <hr class="r-hr">
       <div class="r-row r-small"><span>Order #0001</span><span>${today}</span></div>
       <div class="r-row r-small"><span>Table: Your café</span><span>Dine in</span></div>
@@ -933,28 +975,22 @@ const fmt = n => '₹' + n.toLocaleString('en-IN');
     clearInterval(timer); playing = false; setUI();
     setTimeout(()=>{ if (!playing) ac.suspend(); }, 1200);
   }
-  let muted = false; try { muted = localStorage.getItem('cafeSoundsMuted') === '1'; } catch(e){}
-  const remember = v => { try { localStorage.setItem('cafeSoundsMuted', v ? '1' : '0'); } catch(e){} };
-  let unlockedAt = 0;
   function toggle(){
-    if (Date.now() - unlockedAt < 400) return; // this tap already started the sound
-    try { playing ? stop() : start(); remember(!playing); }
+    try { playing ? stop() : start(); }
     catch(e){ lbl.textContent = 'Sound not supported'; }
   }
-  // Browsers only allow sound after the visitor's first tap, click or key press.
-  // Try right away, and otherwise start on the first interaction anywhere on the page.
-  const GESTURES = ['pointerdown','keydown','touchend'];
-  function unlock(){
-    GESTURES.forEach(ev=>document.removeEventListener(ev, unlock, true));
-    if (playing && ac.state === 'running') return;
-    try { start(); unlockedAt = Date.now(); } catch(e){}
+  // Browsers only let a page play sound after a tap, so the intro screen asks for one.
+  const intro = document.getElementById('intro');
+  function enter(withSound){
+    if (intro.classList.contains('out')) return;
+    if (withSound){ try { start(); } catch(e){} }
+    intro.classList.add('out');
+    document.documentElement.classList.remove('intro-open');
+    window.__repour && window.__repour();
+    setTimeout(()=>{ intro.hidden = true; }, 1100);
   }
-  if (!muted){
-    try {
-      start();
-      setTimeout(()=>{ if (ac.state !== 'running'){ lbl.textContent = 'Tap for sound'; heroBtn.textContent = '♪ Tap anywhere for café sounds'; GESTURES.forEach(ev=>document.addEventListener(ev, unlock, true)); } }, 300);
-    } catch(e){}
-  }
+  intro.addEventListener('click', e=>{ enter(e.target.id !== 'enterQuiet'); });
+  document.getElementById('enterSound').focus({preventScroll:true});
   btn.addEventListener('click', toggle); heroBtn.addEventListener('click', toggle);
   document.addEventListener('visibilitychange', ()=>{ if (ac && playing){ document.hidden ? ac.suspend() : ac.resume(); } });
 })();

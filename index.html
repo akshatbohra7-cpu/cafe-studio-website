@@ -190,6 +190,9 @@ html.intro-open{overflow:hidden}
 .tile.photo,.tile.vid{background:#e9dfd3;margin:0;box-shadow:0 14px 28px -18px rgba(30,18,12,.55)}
 .tile.photo img,.tile.vid video{width:100%;height:100%;object-fit:cover;display:block}
 .tile.vid{width:170px}
+.moodrow .tile{width:300px;height:375px;border-radius:22px}
+.moodrow .tile.vid{width:211px}
+.moodrow .big{font-size:1.55rem}
 .reel-badge{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(30,18,12,.72);color:var(--milk);font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:999px}
 .play-sm{width:0;height:0;border-left:7px solid var(--milk);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
 
@@ -337,6 +340,9 @@ html.intro-open{overflow:hidden}
   .steps{grid-template-columns:1fr}
   .tile{width:200px;height:250px}
   .tile.reel,.tile.vid{width:141px}
+  .moodrow .tile{width:240px;height:300px}
+  .moodrow .tile.vid{width:169px}
+  .moodrow .big{font-size:1.3rem}
   .big{font-size:1.35rem}
   .tile.cup svg{width:120px;height:120px}
   .item-row{flex-wrap:wrap}
@@ -459,8 +465,7 @@ html.intro-open{overflow:hidden}
     <p>The light, the colours and the energy we design for. Your posts get made fresh, for your café and your menu.</p>
   </div>
   <div class="marquee" aria-label="Inspiration board of café posts and reels">
-    <div class="track" id="row1" style="--dur:75s"></div>
-    <div class="track rev" id="row2" style="--dur:85s"></div>
+    <div class="track moodrow" id="row1" style="--dur:90s"></div>
   </div>
   <p class="wrap work-note">A moodboard of styles we love. Everything we make for you is original to your café.</p>
 </section>
@@ -722,28 +727,18 @@ const fmt = n => '₹' + n.toLocaleString('en-IN');
   const row1 = [
     P('handoff','Iced coffee handed across a green café counter'),
     V('reel-food','Reel: dishes on a sunny café table'),
-    P('frosted','Frosted brew post design'),
-    P('latteart','Latte art being poured'),
+    P('pizza','Wood-fired pizza and garlic rice on a café table'),
+    P('cappuccino','A cappuccino dusted with cocoa'),
     {t:'post', bg:R, fg:M, k:'Monday menu', x:'Monday is a *cortado* kind of day.'},
     P('together','Two iced coffees by a window, "Coffee brings people together"'),
-    P('pom','A fluffy dog in a café'),
-    P('machine','Espresso pouring from a machine with chat bubbles'),
-    P('matcha','Matcha latte post design'),
-    P('burger','A loaded burger in paper'),
-    P('pour','Close-up of an espresso shot pouring'),
-  ];
-  const row2 = [
-    P('breakfast','All-day breakfast pancakes post'),
     V('reel-interior','Reel: walking through a café interior'),
-    P('cup','A cup of coffee in warm sunlight'),
-    P('eggcheese','Egg and cheese sandwich post design'),
+    P('tonic','Wild berry espresso tonic'),
+    P('machine','Espresso pouring from a machine with chat bubbles'),
     {t:'post', bg:S, fg:R, k:'Tonight', x:'Open mic. Hot chocolate. Bring *someone.*'},
-    P('daily','Daily brew post design'),
-    P('friends','Two friends having coffee on café steps'),
+    P('pasta','Penne in pink sauce with garlic bread'),
     V('reel-talk','Reel: two friends talking over coffee'),
-    P('pets','Pet-friendly café post'),
-    P('icedlatte','Iced latte post design'),
-    P('table','A café table in afternoon light'),
+    P('twocups','Two coffees on a wooden café table'),
+    P('interior','A calm, sunlit café interior'),
   ];
   const em = t => t.replace(/\*(.+?)\*/g,'<em>$1</em>');
   const html = d => {
@@ -756,7 +751,7 @@ const fmt = n => '₹' + n.toLocaleString('en-IN');
     const one = list.map(html).join('');
     document.getElementById(id).innerHTML = one + `<div style="display:contents" aria-hidden="true">${one}</div>`;
   };
-  fill('row1', row1); fill('row2', row2);
+  fill('row1', row1);
   // some browsers need a nudge to start muted inline video
   document.querySelectorAll('.tile video').forEach(v => { v.muted = true; const p = v.play(); if (p) p.catch(()=>{}); });
 })();

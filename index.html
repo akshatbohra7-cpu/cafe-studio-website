@@ -65,7 +65,7 @@ button{font:inherit;cursor:pointer}
 @media (max-width:420px){.logo{font-size:1.5rem}.logo .mark{width:28px;height:28px}}
 
 /* Intro: the tap that lets the café music play */
-.intro{position:fixed;inset:0;z-index:100;background:var(--night);color:var(--milk);display:grid;place-items:center;padding:24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px));cursor:pointer;clip-path:circle(150% at 50% 42%);transition:clip-path 1s cubic-bezier(.7,0,.2,1)}
+.intro{position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;min-height:100%;z-index:100;box-shadow:0 0 0 100vmax var(--night);background:var(--night);color:var(--milk);display:grid;place-items:center;padding:24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px));cursor:pointer;clip-path:circle(150% at 50% 42%);transition:clip-path 1s cubic-bezier(.7,0,.2,1)}
 .intro.out{clip-path:circle(0% at 50% 42%);pointer-events:none}
 .intro-in{display:grid;justify-items:center;text-align:center;gap:14px}
 .intro-mark{width:clamp(110px,22vw,150px);height:auto;color:var(--milk)}
@@ -84,7 +84,7 @@ button{font:inherit;cursor:pointer}
 .intro-go:hover{transform:scale(1.05) rotate(-1.5deg)}
 .intro-quiet{background:none;border:0;color:#a8939d;font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;text-decoration:underline;text-underline-offset:4px;animation:fade 1s 1.9s both}
 .intro-quiet:hover{color:var(--milk)}
-html.intro-open{overflow:hidden}
+html.intro-open,html.intro-open body{overflow:hidden;background:var(--night)}
 .intro-open .hero h1 .line>span,.intro-open .hero-sub,.intro-open .hero-actions{animation-play-state:paused}
 .nav-cta{font-family:var(--mono);font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--espresso);background:var(--milk);padding:10px 16px;border-radius:999px;text-decoration:none;transition:transform .2s, background .2s}
 .nav-cta:hover{background:var(--strawberry);transform:rotate(-3deg)}
